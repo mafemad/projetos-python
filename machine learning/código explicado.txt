@@ -1,0 +1,83 @@
+#passo a passo de um projeto de ciencia de dados
+#passo 1: entendimento do desafio
+#passo 2: entendimento da area/empres
+	#prever o preço de um barco baseado nas caracteristicas dele, ano , material, usado etc
+
+
+
+#passo 3: extração/obtenção de dados
+
+import pandas as pd
+
+tabela = pd.read_csv("barcos_ref.csv")
+display(tabela)
+#quando usa ciencia de dados precisa ensinar o bicho a fazer uma analise de dados, tem que ser números pq o bicho n entende palavras
+
+
+#passo 4: ajuste de Dados(tratamento/limpeza)
+
+print(tabela.info())
+
+
+
+
+#passo 5: análise exploratoria
+correlacao = tabela.corr()[["Preco"]]
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+#cria grafico
+sns.heatmap(correlacao, cmap="Blues", annot=True)
+#exibe grafico
+plt.show()
+
+#passo 6: modelagem+algoritimos(ia se necessario)
+	#dividir a base em x e y
+y = tabela["preco"]
+x = tabela.drop("Preco", axis=1)
+
+#train test split
+from sklearn.model_selection import train_test_split
+x_treino , x_teste , y_treino , y_teste = train_test_split(x,y, test_size=0.3 ) #random_state=1
+
+#importar a IA
+-RegressaoLinaer e ArvoreDeDecisao
+from sklearn.linear_model import LinearRegression()
+from sklearn.ensemble import RandomForestRegressor()
+#criar ela burra e treinar a bichinha
+modelo_regressaolinear = LinearRegression()
+modelo_arvoredecisao  = RandomForestRegressor
+
+#treinar
+modelo_regressaolinear.fit(x_treino , y_treino)
+modelo_arvoredecisao.fit(x_treino , y_treino)
+
+#passo 7: interpretação de resultados
+
+#escolher o melhor modelo
+from sklear.metrics import r2_score
+previsao_regressaolinear= modelo_regressaolinear.predict(x_teste)
+previsao_arvoredecisao= modelo_arvoredecisao.predict(x_teste)
+
+print(r2_score(y_teste , previsao_regressaolinear))
+print(r2_score(y_teste , previsao_arvoredecisao))
+
+
+#vizualizar as previsões
+tabela_auxiliar = pd.DataFrame()
+tabela_auxiliar["y_teste"]= y_teste
+tabela_auxiliar["arvoredecisao"]= previsao_arvoredecisao
+tabela_auxiliar["regressao linear"]= previsao_regressaolinear
+
+sns.lineplot(data=tabela_auxiliar)
+plt.show()
+
+#fazer novas previsões (usando a inteligencia artificial na pratica)
+
+tabela_nova = pd.read_csv("novos_barcos.csv")
+display(tabela_nova)
+
+previsao = modelo_arvoredecisao.predict(tabela_nova)
+print(previsao)
+

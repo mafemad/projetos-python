@@ -1,0 +1,136 @@
+1° passo= anotar passo a passo do que vai ser feito pelo código,
+como se fosse eu fazendo 
+projeto 1- intensivo:
+
+import pyautogui
+import time
+============================================================
+passo 1: entrar sistema da empresa(link)
+
+navegador aberto
+
+pyautogui.hotkey("ctrl", "t")
+pyautogui.write("https://pages.hashtagtreinamentos.com/aula1-intensivao-sistema)
+pyautogui.press("enter")
+
+#navegador pode precisar carregar
+time.sleep(5)
+
+
+============================================================
+passo 2: fazer login
+
+#clicar no espaço login
+#escrever login
+pyautogui.click(x=,y=)
+pyautogui.write("meu_login")
+
+#clicar no espaço de senha
+#escrever senha
+pyautogui.click(x=,y=)
+pyautogui.write("minha_senha")
+
+#clicar em acessar
+pyautogui.click(x=,y=)
+
+time.sleep(3)
+
+===========================================================
+passo 3: exportar a base de dados
+
+pyautogui.click(x=,y=)#arquivo                    |
+pyautogui.click(x=,y=)#tres pontos                |
+pyautogui.click(x=,y=)#fazer download             |
+                                                  |
+#outro modo                                       |
+pyautogui.click(x=,y=, button="right")#arquivo    |
+pyautogui.click(x=,y=)#fazer download             |
+---------------------------------------------------
+time.sleep(3)
+
+============================================================
+passo 4: calcular indicadores
+
+import pandas as pd
+
+tabela = pd.read_csv(r"local", sep=";")#arquivo
+#jupyter-> display(tabela)
+#outros-> print(tabela)
+
+total_gasto= tabela["valorfinal"].sum()
+quantidade= tabela["quantidade"].sum()
+preço_médio= total_gasto / quantidade
+
+print(total_gasto)
+print(quantidade)
+print(preço_médio)
+
+
+
+
+passo 5: enviar um e-mail para o chefe
+import pyperclip
+
+#entrar no email
+pyautogui.hotkey("ctrl", "t")
+pyautogui.write("https://mail.google.com/mail/u/0/#inbox")
+pyautogui.press("enter")
+-navegador pode precisar carregar-
+time.sleep(5)
+-navegador pode precisar carregar-
+
+#clicar no botão escrever
+pyautogui.click(x=, y=)
+
+#preencher informações
+*destinatário
+pyautogui.write("mateus.madeira@fatec.sp.gov.br")
+pyautogui.press("tab")# escolhe destinatário
+
+*assunto
+pyautogui.press("tab") ou pyautogui.click(x=,y=)
+pyperclip.cop("relatório de vendas")
+pyautogui.hotkey("ctrl" , "v")
+
+*corpo
+texto=f'''prezados,
+segue o relatório de compras
+
+total gasto:R${total_gasto:,.2f}
+quantidade:{quantidade:,.2f}
+preço médio:R4{preço_médio:,.2f}
+
+qualquer dúvida entre em contato 
+vlw flw '''
+
+pyautogui.press("tab") ou pyautogui.click(x=,y=)
+pyperclip.copy(texto)
+pyautogui.hotkey("ctrl" , "v")
+
+
+
+
+#enviar
+pyautogui.hotkey("ctrl , "enter") ou pyautogui.click(x=,y=)
+
+
+
+bibliotecas:
+pandas
+time
+*insert -> !pip  install pyautogui*
+pyautogui.click-> clique com o mouse
+pyautogui.write-> escrever um texto
+pyautogui.press-> apertar um tecla
+pyautogui.hotkey-> apertar um combinação de teclas
+pyautogui.position-> lugar do cursor
+pyautogui.PAUSE=-> pausa entre cada comando 
+pyautogui.scroll-> scroll 
+
+
+
+
+
+posição do cursor:
+time.sleep()
+print(pyautogui.position())

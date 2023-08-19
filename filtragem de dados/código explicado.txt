@@ -1,0 +1,52 @@
+#passo a passo
+#passo 1: importar base de dados
+import pandas as pd
+import potly.express as px
+tabela = pd.read_csv("clientes.csv", encodin="latin", sep=";")
+display(tabela)
+
+
+
+#passo 2: vizualizar a base de dados
+	-> entender informações disponiveis
+	->procurar erros na base de dados
+
+
+#passo 3: tratamento de dados
+#deletar coluna inútil
+tabela= tabela.drop("unammed: 8", axis=1)
+*axis= 0-linha ; axis=1-coluna
+
+print(tabela.info())
+#acertar informações que estão sendo reconhecidas de forma erradas
+
+tabela["Salário Anual (R$)"]= pd.to_numeric(tabela["Salário Anual (R$)"], errors = "coerce")
+
+#corrigir informações vazias
+#display(tabela[tabela["Profissão"].isna()])
+tabela= tabela.dropna()
+print(tabela.info())
+
+
+
+#passo 4: análise inicial-> entender as notas
+display(tabela.describe())
+
+-quanto maior salario maior a nota
+-cliente de promoção são piores
+#passo 5: análise completa-> entender como cada característica afeta a nota
+
+#cria o gráfico
+for coluna in tabela.columns:
+	grafico = px.histogram(tabela, x=coluna , y="Nota(1-100)", histfunc="avg", text_auto= True)
+	#exibe o grafico
+	grafico.show()
+
+#perfil ideal dos clientes
+-acima de 15 anos(a partir disso n influencia)
+-faixa salario nao parece afetar tanto
+-profissões de entretenimento e artistas são as melhores opções(evitar construção)
+-tem entre 10 e 15 anos de experiência
+-familias muito grandes não são eficientes, no máximo 7
+
+*dado que não ajuda só atrapalha

@@ -1,0 +1,58 @@
+#passo a passo
+
+#passo 1: abrir navegador
+
+from selenium import webdriver
+navegador= webdriver.Chrome()
+navegador.get(""https://www.google.com")
+
+#passo 2: importar a base de dados
+import pandas as pd 
+tabela = pd.read_excel("")
+display(tabela)
+
+#passo 3: pra cada produto na base de dados:
+for linha in tabela.index:
+	produto=tabela.loc[linha , "Produto"]
+	produto= produto.replace("ó" , "o").replace("ã", "a").replace("ç","c").replace("á", "a").replace("ú", "u").replace("é","e")
+
+	link= f"https://www.melhorcambio.com/{produto}-hoje"
+	print(link)
+	navegador.get(link)
+
+	preco=navegador.find_element('xpath', '').get_attribute('value)-> inspecionar, selecionador, copiar xpath
+	preco= preco.replace(".", " ").replace(",", ".")
+	print(preco)
+	tabela.loc[linha, "Preço Atual"] = float(preco)
+display(tabela)
+
+#.click()-> clicar
+#.send_keys("texto") -> escrever
+#get_attribute() -> pegar um valor
+
+#pesquisar o preço do produto
+#atualizar o preço na base de dados
+------------------------------------
+#decidir quais produtos comprar
+tabela["Comprar"]= tabela["Preço Atual"] < tabela["Preço Ideal"]
+
+#exportar a base para o excel
+tabela.to_excel("commodities.xlsx")-> substitui a outra
+tabela.to_excel("commodities_atualizado.xlsx", index=False)-> novo excel
+
+navegador.quit()
+
+
+
+
+
+selenium:
+from selenium import webdriver
+navegador= webdriver.Chrome()
+!pip install selenium
+webdriver:
+#firefox-> geckodriver
+#chrome-> chromedriver
+
+unicodedata:
+produto= unicodedata.normalize("NFKD", produto).encode("ascii", "ignore")
